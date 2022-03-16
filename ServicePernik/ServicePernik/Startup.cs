@@ -1,5 +1,4 @@
 using ServicePernik.Data;
-using ServicePernik.Domain;
 using ServicePernik.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ServicePernik.Entities;
+using ServicePernik.Abstractions;
+using ServicePernik.Services;
 
 namespace ServicePernik
 {
@@ -39,6 +41,9 @@ namespace ServicePernik
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             services.AddControllersWithViews();
+
+            services.AddTransient<IEmployeeService, EmployeeService>();
+
             services.AddRazorPages();
             services.Configure<IdentityOptions>(option =>
             {

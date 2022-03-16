@@ -1,7 +1,7 @@
-﻿using ServicePernik.Domain;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using ServicePernik.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,56 +11,58 @@ namespace ServicePernik.Infrastructure
 {
     public static class ApplicationBuilderExtension
     {
-        public static IApplicationBuilder PrepareDatabase(
-            this IApplicationBuilder app)
+        public static async Task<IApplicationBuilder> PrepareDatabase(this IApplicationBuilder app)
         {
-            using var scopedServices = app.ApplicationServices.CreateScope();
-            var serviceProvider = scopedServices.ServiceProvider;
+            using var serviceScope = app.ApplicationServices.CreateScope();
 
-            SeedAdministrator(serviceProvider);
+            var services = serviceScope.ServiceProvider;
+
+            await RoleSeeder(services);
+            await SeedAdministrator(services);
+
 
             return app;
         }
 
-        private static void SeedAdministrator(IServiceProvider services)
+        private static async Task RoleSeeder(IServiceProvider serviceProvider)
         {
-            var userManager =
-        services.GetRequiredService<UserManager<ServiceUser>>();
-            var roleManager =
-        services.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            Task
-                .Run(async () =>
+            string[] roleNames = { "Administrator", "Client", "Employee"};
+
+            IdentityResult roleResult;
+
+            foreach (var role in roleNames)
+            {
+                var roleExist = await roleManager.RoleExistsAsync(role);
+
+                if (!roleExist)
                 {
-                    if (await roleManager.RoleExistsAsync("Administrator"))
-                    {
-                        return;
-                    }
-
-                    var role = new IdentityRole { Name = "Administrator" };
-
-                    await roleManager.CreateAsync(role);
-
-                    const string adminPassword = "123!@#qweQWE";
-                    const string adminUserName = "admin";
-                    const string adminEmail = "admin@admin.com";
-                    const string adminFirstName = "Admin";
-                    const string adminLastName = "Admin";
-
-                    var user = new ServiceUser
-                    {
-                        Email = adminEmail,
-                        UserName = adminUserName,
-                        FirstName = adminFirstName,
-                        LastName = adminLastName
-                    };
-
-                    await userManager.CreateAsync(user, adminPassword);
-                    await userManager.AddToRoleAsync(user, role.Name);
-                })
-                .GetAwaiter()
-                .GetResult();
+                    roleResult = await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
         }
+
+
+        private static async Task SeedAdministrator(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<ServiceUser>>();
+
+            if (await userManager.FindByNameAsync("admin") == null)
+            {
+                ServiceUser user = new ServiceUser();
+                user.UserName = "admin";
+                user.Email = "admin@admin.com";
+
+                var result = await userManager.CreateAsync
+                (user, "123!@#qweQWE");
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Administrator").Wait();
+                }
+            }
+        }
+
     }
 }
-
