@@ -19,16 +19,17 @@ namespace ServicePernik.Controllers
         private readonly IEmployeeService _employeeService;
         private readonly ApplicationDbContext _context;
 
-        public EmployeesController(UserManager<ServiceUser> userManager, IEmployeeService employeeService)
+        public EmployeesController(UserManager<ServiceUser> userManager, IEmployeeService employeeService, ApplicationDbContext context)
         {
-            _userManager = userManager;
+            _userManager = userManager;                                                      
             _employeeService = employeeService;
-        }
-
-        public EmployeesController(ApplicationDbContext context)
-        {
             _context = context;
         }
+
+        //public EmployeesController(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //}
 
         // GET: EmployeesController
         public ActionResult Index()
