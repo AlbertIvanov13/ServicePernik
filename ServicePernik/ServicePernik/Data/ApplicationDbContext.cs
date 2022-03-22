@@ -11,11 +11,13 @@ namespace ServicePernik.Data
     public class ApplicationDbContext : IdentityDbContext<ServiceUser>
     {
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Client> Clients { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
             this.Database.EnsureCreated();
         }
         public DbSet<ServicePernik.Models.Employee.CreateEmployeeVM> CreateEmployeeVM { get; set; }
+        public DbSet<ServicePernik.Models.Client.CreateClientVM> CreateClientVM { get; set; }
     }
 }

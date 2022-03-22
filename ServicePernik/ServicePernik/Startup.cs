@@ -43,6 +43,7 @@ namespace ServicePernik
             services.AddControllersWithViews();
 
             services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddTransient<IClientService, ClientService>();
 
             services.AddRazorPages();
             services.Configure<IdentityOptions>(option =>
