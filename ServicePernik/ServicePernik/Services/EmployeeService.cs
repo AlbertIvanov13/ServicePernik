@@ -16,7 +16,7 @@ namespace ServicePernik.Services
         {
             _context = context;
         }
-        public bool CreateEmployee(string firstName, string lastName, string phone, string jobTitle, string userId)
+        public bool CreateEmployee(string firstName, string lastName,  string jobTitle, string userId)
         {
             if (_context.Employees.Any(p => p.UserId == userId))
             {
@@ -26,7 +26,6 @@ namespace ServicePernik.Services
             {
                 FirstName = firstName,
                 LastName = lastName,
-                Phone = phone,
                 JobTitle = jobTitle,
                 UserId = userId
             };
@@ -43,7 +42,9 @@ namespace ServicePernik.Services
 
         public List<Employee> GetEmployees()
         {
-            throw new NotImplementedException();
+            List<Employee> employees = _context.Employees
+                .ToList();
+            return employees;
         }
 
         public string GetFullName(int employeeId)

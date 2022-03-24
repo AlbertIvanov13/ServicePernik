@@ -16,6 +16,6 @@ namespace ServicePernik.Abstractions
 
         string GetFullName(int employeeId);
 
-        bool CreateEmployee(string firstName, string lastName, string phone, string jobTitle, string userId);
+        bool CreateEmployee(string firstName, string lastName, string jobTitle, string userId);
     }
 }

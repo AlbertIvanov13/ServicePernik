@@ -12,7 +12,7 @@ namespace ServicePernik.Entities
 
         public int Id { get; set; }
 
-        [Required]
+        
         [Display(Name = "First Name")]
 
         public string FirstName { get; set; }
@@ -23,10 +23,6 @@ namespace ServicePernik.Entities
         public string LastName { get; set; }
 
         [Required]
-        [MaxLength(10)]
-        public string Phone { get; set; }
-
-        [Required]
         [MaxLength(30)]
 
         public string JobTitle { get; set; }
@@ -34,5 +30,6 @@ namespace ServicePernik.Entities
         public string UserId { get; set; }
 
         public virtual ServiceUser User { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

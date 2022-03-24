@@ -9,18 +9,8 @@ namespace ServicePernik.Models.Client
     public class CreateClientVM
     {
         [Key]
+        public int Id { get; set; }
 
-        public string Id { get; set; }
-
-        [Required]
-        [Display(Name = "Username")]
-
-        public string Username { get; set; }
-
-        [Required]
-        [Display(Name = "Email")]
-
-        public string Email { get; set; }
 
         [Required]
         [Display(Name = "First Name")]
@@ -32,9 +22,7 @@ namespace ServicePernik.Models.Client
         [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; }
 
-        [Required]
-        [MaxLength(10)]
-        public string PhoneNumber { get; set; }
+      
 
         [Required]
         [MaxLength(30)]

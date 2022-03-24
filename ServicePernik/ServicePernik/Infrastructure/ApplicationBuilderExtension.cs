@@ -53,6 +53,7 @@ namespace ServicePernik.Infrastructure
                 ServiceUser user = new ServiceUser();
                 user.UserName = "admin";
                 user.Email = "admin@admin.com";
+                user.PhoneNumber = "00000000";
 
                 var result = await userManager.CreateAsync
                 (user, "123!@#qweQWE");

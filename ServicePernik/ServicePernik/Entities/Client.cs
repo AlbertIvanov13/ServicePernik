@@ -10,10 +10,9 @@ namespace ServicePernik.Entities
     public class Client
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
 
-        public string Id { get; set; }
+        public int Id { get; set; }
+
         [Required]
         [Display(Name = "First Name")]
 
@@ -24,12 +23,14 @@ namespace ServicePernik.Entities
 
         public string LastName { get; set; }
 
-        [Required]
-        [MaxLength(30)]
-        public string Address { get; set; }
+        //[Required]
+        //[MaxLength(10)]
+        //public string Phone { get; set; }
 
+        public string Address { get; set; }
         public string UserId { get; set; }
 
         public virtual ServiceUser User { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

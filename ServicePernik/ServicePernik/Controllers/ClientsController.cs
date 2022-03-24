@@ -16,20 +16,32 @@ namespace ServicePernik.Controllers
     public class ClientsController : Controller
     {
         private readonly IClientService _clientService;
-        private readonly ApplicationDbContext context;
+        //private readonly ApplicationDbContext context;
         private readonly UserManager<ServiceUser> _userManager;
 
         public ClientsController(IClientService clientService, ApplicationDbContext context, UserManager<ServiceUser> userManager)
         {
             _clientService = clientService;
-            this.context = context;
+           // _context = context;
             _userManager = userManager;
         }
         // GET: ClientsController
         public ActionResult Index()
         {
-            return View();
+           var users = _clientService.GetClients()
+                 .Select(u => new ClientListingVM
+                 {
+                     Id = u.Id,
+                     FirstName=u.FirstName,
+                     LastName=u.LastName,
+                     Email=u.User.Email,
+                     PhoneNumber=u.User.PhoneNumber,
+                     Address=u.Address
+                 }).ToList(); 
+
+            return this.View(users);
         }
+
 
         // GET: ClientsController/Details/5
         public ActionResult Details(int id)
@@ -52,11 +64,13 @@ namespace ServicePernik.Controllers
             var userIdAlreadyClient = this._clientService
                 .GetClients()
                 .Any(d => d.UserId == userId);
+
             if (!ModelState.IsValid)
             {
                 return View(client);
             }
             var created = _clientService.CreateClient(client.FirstName, client.LastName, client.Address, userId);
+
 
             if (created)
             {
@@ -66,7 +80,9 @@ namespace ServicePernik.Controllers
             {
                 return View();
             }
+
         }
+
 
         // GET: ClientsController/Edit/5
         public ActionResult Edit(int id)

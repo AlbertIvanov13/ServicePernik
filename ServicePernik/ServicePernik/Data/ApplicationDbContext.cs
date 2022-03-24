@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ServicePernik.Models.Employee;
+using ServicePernik.Models.Client;
 
 namespace ServicePernik.Data
 {
@@ -12,6 +13,10 @@ namespace ServicePernik.Data
     {
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<ServiceCategory> ServiceCategories { get; set; }
+        public DbSet<StatusReservation> StatusReservations { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -19,5 +24,7 @@ namespace ServicePernik.Data
         }
         public DbSet<ServicePernik.Models.Employee.CreateEmployeeVM> CreateEmployeeVM { get; set; }
         public DbSet<ServicePernik.Models.Client.CreateClientVM> CreateClientVM { get; set; }
+        public DbSet<ServicePernik.Models.Client.ClientListingVM> ClientListingVM { get; set; }
+        public DbSet<ServicePernik.Models.Employee.EmployeeListingVM> EmployeeListingVM { get; set; }
     }
 }

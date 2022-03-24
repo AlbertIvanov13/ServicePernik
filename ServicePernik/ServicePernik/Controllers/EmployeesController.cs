@@ -34,7 +34,18 @@ namespace ServicePernik.Controllers
         // GET: EmployeesController
         public ActionResult Index()
         {
-            return View();
+            var users = _employeeService.GetEmployees()
+                  .Select(u => new EmployeeListingVM
+                  {
+                      Id = u.Id,
+                      FirstName = u.FirstName,
+                      LastName = u.LastName,
+                      Email = u.User.Email,
+                      PhoneNumber = u.User.PhoneNumber,
+                      JobTitle = u.JobTitle
+                  }).ToList();
+
+            return this.View(users);
         }
 
         // GET: EmployeesController/Details/5
@@ -64,12 +75,13 @@ namespace ServicePernik.Controllers
                 ServiceUser user = new ServiceUser();
                 user.UserName = employee.Username;
                 user.Email = employee.Email;
+                user.PhoneNumber = employee.PhoneNumber;
 
                 var result = await _userManager.CreateAsync(user, "Employee123!");
 
                 if (result.Succeeded)
                 {
-                    var created = _employeeService.CreateEmployee(employee.FirstName, employee.LastName, employee.Phone, employee.JobTitle, user.Id);
+                    var created = _employeeService.CreateEmployee(employee.FirstName, employee.LastName,  employee.JobTitle, user.Id);
                     if (created)
                     {
                         _userManager.AddToRoleAsync(user, "Employee").Wait();

@@ -24,8 +24,8 @@ namespace ServicePernik.Services
             }
             Client clientFromDb = new Client()
             {
-                LastName = lastName,
                 FirstName = firstName,
+                LastName = lastName,
                 Address = address,
                 UserId = userId
             };
@@ -35,9 +35,13 @@ namespace ServicePernik.Services
             return _context.SaveChanges() != 0;
         }
 
+
         public Client GetClientByUserId(string userId)
         {
-            throw new NotImplementedException();
+            var client = _context.Clients.FirstOrDefault(x => x.UserId == userId);
+
+            return client;
+
         }
 
         public List<Client> GetClients()

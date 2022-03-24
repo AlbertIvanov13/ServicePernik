@@ -16,6 +16,6 @@ namespace ServicePernik.Abstractions
 
         string GetFullName(int clientId);
 
-        bool CreateClient(string firstName, string lastName, string address, string userId);
+        public bool CreateClient(string firstName, string lastName, string address, string userId);
     }
 }
