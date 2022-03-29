@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace ServicePernik.Entities
 {
-    public class Service
+    public class Repair
     {
+        public Repair()
+        {
+            this.Reports = new HashSet<Report>();
+        }
         [Key]
 
         public int Id { get; set; }
@@ -21,8 +25,8 @@ namespace ServicePernik.Entities
         public string Name { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }
-        public virtual ServiceCategory ServiceCategory { get; set; }
+        public int RepairCategoryId { get; set; }
+        public virtual RepairCategory RepairCategory { get; set; }
 
         [Required]
         public decimal Price { get; set; }
@@ -30,5 +34,7 @@ namespace ServicePernik.Entities
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
+
+        public virtual ICollection<Report> Reports { get; set; }
     }
 }

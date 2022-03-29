@@ -14,9 +14,10 @@ namespace ServicePernik.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<Service> Services { get; set; }
-        public DbSet<ServiceCategory> ServiceCategories { get; set; }
+        public DbSet<Repair> Repairs { get; set; }
+        public DbSet<RepairCategory> RepairCategories { get; set; }
         public DbSet<StatusReservation> StatusReservations { get; set; }
+        public DbSet<Report> Reports { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

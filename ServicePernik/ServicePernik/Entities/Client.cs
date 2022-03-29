@@ -9,6 +9,10 @@ namespace ServicePernik.Entities
 {
     public class Client
     {
+        public Client()
+        {
+            this.Reservations = new HashSet<Reservation>();
+        }
         [Key]
 
         public int Id { get; set; }

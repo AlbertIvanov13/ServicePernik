@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace ServicePernik.Entities
 {
-    public class ServiceCategory
+    public class Report
     {
         [Key]
         public int Id { get; set; }
+        [Required]
+        public int RepairId { get; set; }
+        public virtual Repair Repair { get; set; }
 
         [Required]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
+        public int ReservationId { get; set; }
+        public virtual Reservation Reservation { get; set; }
     }
 }

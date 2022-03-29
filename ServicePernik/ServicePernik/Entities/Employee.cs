@@ -8,6 +8,10 @@ namespace ServicePernik.Entities
 {
     public class Employee
     {
+        public Employee()
+        {
+            this.Reservations = new HashSet<Reservation>();          
+        }
         [Key]
 
         public int Id { get; set; }
