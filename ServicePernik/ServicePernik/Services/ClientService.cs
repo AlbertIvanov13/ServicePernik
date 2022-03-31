@@ -56,6 +56,16 @@ namespace ServicePernik.Services
             throw new NotImplementedException();
         }
 
+        public List<Repair> GetRepairsByClient(int clientId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Reservation> GetReservationsByClient(int clientId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool RemoveById(int clientId)
         {
             throw new NotImplementedException();

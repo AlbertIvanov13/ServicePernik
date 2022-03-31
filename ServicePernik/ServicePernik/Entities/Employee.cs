@@ -10,6 +10,7 @@ namespace ServicePernik.Entities
     {
         public Employee()
         {
+            this.Hours = new HashSet<Hour>();
             this.Reservations = new HashSet<Reservation>();          
         }
         [Key]
@@ -34,6 +35,8 @@ namespace ServicePernik.Entities
         public string UserId { get; set; }
 
         public virtual ServiceUser User { get; set; }
+
+        public virtual ICollection<Hour> Hours { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

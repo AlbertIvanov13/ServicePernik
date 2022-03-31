@@ -11,6 +11,8 @@ namespace ServicePernik.Abstractions
         List<Employee> GetEmployees();
 
         Employee GetEmployeeById(int employeeId);
+        List<Hour> GetHoursByEmployee(int empoyeeId);
+        List<Repair> GetRepairsByEmployee(int employeeId);
 
         public bool RemoveById(int employeeId);
 

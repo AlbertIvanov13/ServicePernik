@@ -12,6 +12,7 @@ namespace ServicePernik.Entities
         {
             this.Reports = new HashSet<Report>();
         }
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -33,5 +34,10 @@ namespace ServicePernik.Entities
         public virtual Employee Employee { get; set; }
 
         public virtual ICollection<Report> Reports { get; set; }
+
+        [Required]
+        public virtual int HourId { get; set; }
+
+        public virtual Hour Hour { get; set; }
     }
 }

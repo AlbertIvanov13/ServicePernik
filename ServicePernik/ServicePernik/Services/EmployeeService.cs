@@ -52,6 +52,16 @@ namespace ServicePernik.Services
             throw new NotImplementedException();
         }
 
+        public List<Hour> GetHoursByEmployee(int empoyeeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Repair> GetRepairsByEmployee(int employeeId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool RemoveById(int employeeId)
         {
             throw new NotImplementedException();

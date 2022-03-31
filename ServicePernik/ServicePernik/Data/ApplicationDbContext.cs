@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using ServicePernik.Models.Employee;
 using ServicePernik.Models.Client;
+using ServicePernik.Models.Hour;
 
 namespace ServicePernik.Data
 {
@@ -17,6 +18,7 @@ namespace ServicePernik.Data
         public DbSet<Repair> Repairs { get; set; }
         public DbSet<RepairCategory> RepairCategories { get; set; }
         public DbSet<StatusReservation> StatusReservations { get; set; }
+        public DbSet<Hour> Hours { get; set; }
         public DbSet<Report> Reports { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -27,5 +29,10 @@ namespace ServicePernik.Data
         public DbSet<ServicePernik.Models.Client.CreateClientVM> CreateClientVM { get; set; }
         public DbSet<ServicePernik.Models.Client.ClientListingVM> ClientListingVM { get; set; }
         public DbSet<ServicePernik.Models.Employee.EmployeeListingVM> EmployeeListingVM { get; set; }
+        public DbSet<ServicePernik.Models.Employee.EmployeePairVM> EmployeePairVM { get; set; }
+        public DbSet<ServicePernik.Models.Hour.AddHourVM> AddHourVM { get; set; }
+        public DbSet<ServicePernik.Models.Hour.AllHoursVM> AllHoursVM { get; set; }
+        public DbSet<ServicePernik.Models.Hour.HourPairVM> HourPairVM { get; set; }
+        public DbSet<ServicePernik.Models.Reservation.AddReservationVM> AddReservationVM { get; set; }
     }
 }

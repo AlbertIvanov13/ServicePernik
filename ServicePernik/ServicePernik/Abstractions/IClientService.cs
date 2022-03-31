@@ -11,6 +11,8 @@ namespace ServicePernik.Abstractions
         List<Client> GetClients();
 
         Client GetClientByUserId(string userId);
+        List<Reservation> GetReservationsByClient(int clientId);
+        List<Repair> GetRepairsByClient(int clientId);
 
         public bool RemoveById(int clientId);
 
