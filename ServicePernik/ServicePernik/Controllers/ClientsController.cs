@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServicePernik.Abstractions;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace ServicePernik.Controllers
 {
+    [Authorize]
     public class ClientsController : Controller
     {
         private readonly IClientService _clientService;
@@ -26,6 +28,7 @@ namespace ServicePernik.Controllers
             _userManager = userManager;
         }
         // GET: ClientsController
+        [Authorize(Roles = "Administrator")]
         public ActionResult Index()
         {
            var users = _clientService.GetClients()

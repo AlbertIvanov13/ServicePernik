@@ -9,6 +9,7 @@ namespace ServicePernik.Abstractions
     public interface IEmployeeService
     {
         List<Employee> GetEmployees();
+        bool UpdateEmployee(int employeeId, string username, string email, string phoneNumber, string firstName, string lastName, string jobTitle);
 
         Employee GetEmployeeById(int employeeId);
         List<Hour> GetHoursByEmployee(int empoyeeId);

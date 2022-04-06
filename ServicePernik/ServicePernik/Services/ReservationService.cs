@@ -23,7 +23,9 @@ namespace ServicePernik.Services
             {
                 HourId = hourId,
                 ClientId = client.Id,
-                Description = description
+                Description = description,
+                DateReservation = DateTime.Now,
+                StatusReservationId = 1
             };
 
             _context.Reservations.Add(reservation);

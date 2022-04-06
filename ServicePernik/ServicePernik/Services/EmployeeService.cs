@@ -37,7 +37,7 @@ namespace ServicePernik.Services
 
         public Employee GetEmployeeById(int employeeId)
         {
-            throw new NotImplementedException();
+            return _context.Employees.Find(employeeId);
         }
 
         public List<Employee> GetEmployees()
@@ -64,7 +64,30 @@ namespace ServicePernik.Services
 
         public bool RemoveById(int employeeId)
         {
-            throw new NotImplementedException();
+            var employee = GetEmployeeById(employeeId);
+            if (employee == default(Employee))
+            {
+                return false;
+            }
+            _context.Remove(employee);
+            return _context.SaveChanges() != 0;
+        }
+
+        public bool UpdateEmployee(int employeeId, string username, string email, string phoneNumber, string firstName, string lastName, string jobTitle)
+        {
+            var employee = GetEmployeeById(employeeId);
+            if (employee == default(Employee))
+            {
+                return false;
+            }
+            employee.User.UserName = username;
+            employee.User.Email = email;
+            employee.User.PhoneNumber = phoneNumber;
+            employee.FirstName = firstName;
+            employee.LastName = lastName;
+            employee.JobTitle = jobTitle;
+            _context.Update(employee);
+            return _context.SaveChanges() != 0;
         }
     }
 }

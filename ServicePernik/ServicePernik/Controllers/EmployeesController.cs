@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServicePernik.Abstractions;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace ServicePernik.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
 
@@ -32,6 +34,7 @@ namespace ServicePernik.Controllers
         //}
 
         // GET: EmployeesController
+        [Authorize(Roles = "Administrator")]
         public ActionResult Index()
         {
             var users = _employeeService.GetEmployees()
@@ -51,10 +54,26 @@ namespace ServicePernik.Controllers
         // GET: EmployeesController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Employee item = _employeeService.GetEmployeeById(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            EmployeeDetailsVM employee = new EmployeeDetailsVM()
+            {
+                Id = item.Id,
+                UserName = item.User.UserName,
+                Email = item.User.Email,
+                PhoneNumber = item.User.PhoneNumber,
+                FirstName = item.FirstName,
+                LastName = item.LastName,
+                JobTitle = item.JobTitle
+            };
+            return View(employee);
         }
 
         // GET: EmployeesController/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -63,6 +82,7 @@ namespace ServicePernik.Controllers
         // POST: EmployeesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create(CreateEmployeeVM employee)
         {
             if (!ModelState.IsValid)
@@ -94,45 +114,90 @@ namespace ServicePernik.Controllers
         }
 
         // GET: EmployeesController/Edit/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int id)
         {
-            return View();
+            Employee item = _employeeService.GetEmployeeById(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            CreateEmployeeVM employee = new CreateEmployeeVM()
+            {
+                Id = item.Id,
+                Username = item.User.UserName,
+                Email = item.User.Email,
+                PhoneNumber = item.User.PhoneNumber,
+                FirstName = item.FirstName,
+                LastName = item.LastName,
+                JobTitle = item.JobTitle,
+            };
+            return View(employee);
         }
 
         // POST: EmployeesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [Authorize(Roles = "Administrator")]
+        public ActionResult Edit(int id, CreateEmployeeVM bindingModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var updated = _employeeService.UpdateEmployee(id, bindingModel.Username, bindingModel.Email, bindingModel.PhoneNumber, bindingModel.FirstName, bindingModel.LastName, bindingModel.JobTitle);
+                if (updated)
+                {
+                    return this.RedirectToAction("Index");
+                }
+
             }
-            catch
-            {
-                return View();
-            }
+            return View(bindingModel);
+
         }
 
         // GET: EmployeesController/Delete/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int id)
         {
-            return View();
+            Employee item = _employeeService.GetEmployeeById(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            CreateEmployeeVM employee = new CreateEmployeeVM()
+            {
+                Id = item.Id,
+                Username = item.User.UserName,
+                Email = item.User.Email,
+                PhoneNumber = item.User.PhoneNumber,
+                FirstName = item.FirstName,
+                LastName = item.LastName,
+                JobTitle = item.JobTitle,
+            };
+            return View(employee);
         }
 
         // POST: EmployeesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
+            var deleted = _employeeService.RemoveById(id);
+
+            if (deleted)
             {
-                return RedirectToAction(nameof(Index));
+                return this.RedirectToAction("Index", "Employees");
             }
-            catch
+            else
             {
                 return View();
             }
+
+        }
+        public IActionResult Success()
+        {
+            return this.View();
+
         }
     }
 }

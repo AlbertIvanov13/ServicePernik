@@ -8,7 +8,6 @@ namespace ServicePernik.Models.Reservation
 {
     public class AddReservationVM
     {
-        [Key]
         public int Id { get; set; }
         public int HourId { get; set; }
         public string Description { get; set; }

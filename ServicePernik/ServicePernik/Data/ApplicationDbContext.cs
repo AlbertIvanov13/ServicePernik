@@ -25,7 +25,7 @@ namespace ServicePernik.Data
         {
             this.Database.EnsureCreated();
         }
-        public DbSet<ServicePernik.Models.Employee.CreateEmployeeVM> CreateEmployeeVM { get; set; }
+     /*   public DbSet<ServicePernik.Models.Employee.CreateEmployeeVM> CreateEmployeeVM { get; set; }
         public DbSet<ServicePernik.Models.Client.CreateClientVM> CreateClientVM { get; set; }
         public DbSet<ServicePernik.Models.Client.ClientListingVM> ClientListingVM { get; set; }
         public DbSet<ServicePernik.Models.Employee.EmployeeListingVM> EmployeeListingVM { get; set; }
@@ -34,5 +34,7 @@ namespace ServicePernik.Data
         public DbSet<ServicePernik.Models.Hour.AllHoursVM> AllHoursVM { get; set; }
         public DbSet<ServicePernik.Models.Hour.HourPairVM> HourPairVM { get; set; }
         public DbSet<ServicePernik.Models.Reservation.AddReservationVM> AddReservationVM { get; set; }
+        public DbSet<ServicePernik.Models.Employee.EmployeeDetailsVM> employeeDetailsVM { get; set; }
+     */
     }
 }

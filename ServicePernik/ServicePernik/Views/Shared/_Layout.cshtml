@@ -39,7 +39,7 @@
                                        data-toggle="dropdown"
                                        aria-haspopup="true"
                                        aria-expanded="false">
-                                        Repairs
+                                        <b>Repairs</b>
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -49,8 +49,45 @@
                                 </div>
                             </li>
                         }
+                        @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Administrator")))
+                        {
+                            <li class="nav-item active">
+                                <div class="dropdown show">
+                                    <a class="nav-link active dropdown-toggle" href="#"
+                                       id="dropdownMenuLink"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        <b>Employees</b>
+                                    </a>
 
-                    </ul>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="/Employees/Index">AllEmployees</a>
+                                        <a class="dropdown-item" href="/Employees/Create">AddEmployee</a>
+                                    </div>
+                                </div>
+                            </li>
+                            @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Administrator")))
+                            {
+                                <li class="nav-item active">
+                                    <div class="dropdown show">
+                                        <a class="nav-link active dropdown-toggle" href="#"
+                                           id="dropdownMenuLink"
+                                           data-toggle="dropdown"
+                                           aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <b>Clients</b>
+                                        </a>
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="/Clients/Index">AllClients</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        }
+
+                        </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>

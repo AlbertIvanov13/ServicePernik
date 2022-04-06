@@ -8,10 +8,10 @@ namespace ServicePernik.Entities
 {
     public class Reservation
     {
-        public Reservation()
+       /* public Reservation()
         {
             this.Reports = new HashSet<Report>();
-        }
+        }*/
         [Key]
         public int Id { get; set; }
 
@@ -29,11 +29,11 @@ namespace ServicePernik.Entities
         public int StatusReservationId { get; set; }
         public virtual StatusReservation StatusReservation { get; set; }
 
-        [Required]
-        public int EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        //[Required]
+       // public int EmployeeId { get; set; }
+        //public virtual Employee Employee { get; set; }
 
-        public virtual ICollection<Report> Reports { get; set; }
+       // public virtual ICollection<Report> Reports { get; set; }
 
         [Required]
         public virtual int HourId { get; set; }

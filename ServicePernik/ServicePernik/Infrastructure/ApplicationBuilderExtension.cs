@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using ServicePernik.Data;
 using ServicePernik.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,31 @@ namespace ServicePernik.Infrastructure
             using var serviceScope = app.ApplicationServices.CreateScope();
 
             var services = serviceScope.ServiceProvider;
+            var data = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            SeedsStatusReservation(data);
 
             await RoleSeeder(services);
             await SeedAdministrator(services);
 
 
             return app;
+        }
+
+        private static void SeedsStatusReservation(ApplicationDbContext data)
+        {
+            if (data.StatusReservations.Any())
+            {
+                return;
+            }
+            data.StatusReservations.AddRange(new[]
+            {
+                new StatusReservation {Name="Waiting"},
+                new StatusReservation {Name="InProccess"},
+                new StatusReservation {Name="Done"},
+                new StatusReservation {Name="Denied"},
+               
+            });
+            data.SaveChanges();
         }
 
         private static async Task RoleSeeder(IServiceProvider serviceProvider)
