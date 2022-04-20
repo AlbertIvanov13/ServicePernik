@@ -8,8 +8,8 @@ namespace ServicePernik.Abstractions
 {
     public interface IHourService
     {
-        bool CreateHour(DateTime freeHour, int doctorId);
-        bool UpdateHour(int hourId, DateTime freeHour, int doctorId);
+        bool CreateHour(DateTime freeHour, int employeeId);
+        bool UpdateHour(int hourId, DateTime freeHour, int employeeId);
         List<Hour> GetHours();
         List<Hour> GetFreeHours();
         Hour GetHourById(int hourId);

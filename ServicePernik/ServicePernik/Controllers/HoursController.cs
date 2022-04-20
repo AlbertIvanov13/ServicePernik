@@ -53,7 +53,7 @@ namespace ServicePernik.Controllers
                     EmployeeId = c.Id,
                     FullName = c.FirstName + " " + c.LastName
                 })
-                .ToList();
+                .ToList(); 
             return View(hour);
         }
 

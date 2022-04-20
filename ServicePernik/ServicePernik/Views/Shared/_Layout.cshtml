@@ -19,17 +19,35 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><b>Home</b></a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><b>Начало</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy"><b>Privacy</b></a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AboutUs"><b>За нас</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AboutUs"><b>About Us</b></a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Contacts"><b>Контакти</b></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Contacts"><b>Contacts</b></a>
-                        </li>
+                        @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Administrator")))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Hours" asp-action="Create"><b>Създай час</b></a>
+                            </li>
+                        }
+                    <li class="nav-item active">
+                        <div class="dropdown show">
+                            <a class="nav-link active dropdown-toggle" href="#"
+                               id="dropdownMenuLink"
+                               data-toggle="dropdown"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                <b>Часове</b>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="/Hours/Index">Всички часове</a>
+                            </div>
+                        </div>
+                    </li>
                         @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Administrator")))
                         {
                             <li class="nav-item active">
@@ -39,12 +57,12 @@
                                        data-toggle="dropdown"
                                        aria-haspopup="true"
                                        aria-expanded="false">
-                                        <b>Repairs</b>
+                                        <b>Услуги</b>
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="/Offers/Index">All</a>
-                                        <a class="dropdown-item" href="/Offers/Create">Add</a>
+                                        <a class="dropdown-item" href="/Repairs/Index">Всички услуги</a>
+                                        <a class="dropdown-item" href="/Repairs/Create">Добави услуга</a>
                                     </div>
                                 </div>
                             </li>
@@ -58,12 +76,12 @@
                                        data-toggle="dropdown"
                                        aria-haspopup="true"
                                        aria-expanded="false">
-                                        <b>Employees</b>
+                                        <b>Служители</b>
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="/Employees/Index">AllEmployees</a>
-                                        <a class="dropdown-item" href="/Employees/Create">AddEmployee</a>
+                                        <a class="dropdown-item" href="/Employees/Index">Всички служители</a>
+                                        <a class="dropdown-item" href="/Employees/Create">Добавяне на служител</a>
                                     </div>
                                 </div>
                             </li>
@@ -76,18 +94,18 @@
                                            data-toggle="dropdown"
                                            aria-haspopup="true"
                                            aria-expanded="false">
-                                            <b>Clients</b>
+                                            <b>Клиенти</b>
                                         </a>
 
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="/Clients/Index">AllClients</a>
+                                            <a class="dropdown-item" href="/Clients/Index">Всички клиенти</a>
                                         </div>
                                     </div>
                                 </li>
                             }
                         }
 
-                        </ul>
+                    </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>

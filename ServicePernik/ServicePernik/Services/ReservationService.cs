@@ -36,5 +36,12 @@ namespace ServicePernik.Services
             return _context.SaveChanges() != 0;
 
         }
+
+        public List<Reservation> GetReservations()
+        {
+            List<Reservation> reservations = _context.Reservations
+                 .ToList();
+            return reservations;
+        }
     }
 }

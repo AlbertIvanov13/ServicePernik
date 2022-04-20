@@ -31,5 +31,12 @@ namespace ServicePernik.Services
             _context.SaveChanges();
             return _context.SaveChanges() != 0;
         }
+
+        public List<Repair> GetRepairs()
+        {
+            List<Repair> repairs = _context.Repairs
+                 .ToList();
+            return repairs;
+        }
     }
 }

@@ -23,7 +23,15 @@ namespace ServicePernik.Controllers
         // GET: ReservationsController
         public ActionResult Index()
         {
-            return View();
+            List<AllReservationsVM> reservations = _reservationService.GetReservations()
+               .Select(item => new AllReservationsVM()
+               {
+                   Id = item.Id,
+                   HourId = item.HourId,
+                   Description = item.Description                
+
+               }).ToList();
+            return View(reservations);
         }
 
         // GET: ReservationsController/Details/5

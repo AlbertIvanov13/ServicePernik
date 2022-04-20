@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServicePernik.Abstractions;
+using ServicePernik.Models.Repair;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,11 @@ namespace ServicePernik.Controllers
 {
     public class RepairsController : Controller
     {
+        private readonly IRepairService _repairService;
+        public RepairsController(IRepairService repairService)
+        {
+            _repairService = repairService;
+        }
         // GET: RepairsController
         public ActionResult Index()
         {
@@ -24,19 +31,30 @@ namespace ServicePernik.Controllers
         // GET: RepairsController/Create
         public ActionResult Create()
         {
-            return View();
+            var repairs = _repairService.GetRepairs()
+                  .Select(u => new AllRepairsVM
+                  {
+                      Id = u.Id,
+                      Code = u.Code,
+                      Name = u.Name,
+                      Price = u.Price,
+                      Description = u.Description
+                  }).ToList();
+
+            return this.View(repairs);
         }
 
         // POST: RepairsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+        public ActionResult Create(AddRepairVM model)
+        {          
+            var created = _repairService.CreateRepair(model.Code, model.Name, model.RepairCategoryId, model.Price, model.Description);
+            if (created)
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
                 return View();
             }

@@ -7,6 +7,8 @@ using System.Text;
 using ServicePernik.Models.Employee;
 using ServicePernik.Models.Client;
 using ServicePernik.Models.Hour;
+using ServicePernik.Models.Reservation;
+using ServicePernik.Models.Repair;
 
 namespace ServicePernik.Data
 {
@@ -25,6 +27,8 @@ namespace ServicePernik.Data
         {
             this.Database.EnsureCreated();
         }
+        public DbSet<ServicePernik.Models.Reservation.AllReservationsVM> AllReservationsVM { get; set; }
+        public DbSet<ServicePernik.Models.Repair.AddRepairVM> AddRepairVM { get; set; }
      /*   public DbSet<ServicePernik.Models.Employee.CreateEmployeeVM> CreateEmployeeVM { get; set; }
         public DbSet<ServicePernik.Models.Client.CreateClientVM> CreateClientVM { get; set; }
         public DbSet<ServicePernik.Models.Client.ClientListingVM> ClientListingVM { get; set; }
