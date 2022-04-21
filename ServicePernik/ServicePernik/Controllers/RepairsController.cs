@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServicePernik.Abstractions;
+using ServicePernik.Models.Category;
 using ServicePernik.Models.Repair;
 using System;
 using System.Collections.Generic;
@@ -19,18 +20,6 @@ namespace ServicePernik.Controllers
         // GET: RepairsController
         public ActionResult Index()
         {
-            return View();
-        }
-
-        // GET: RepairsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: RepairsController/Create
-        public ActionResult Create()
-        {
             var repairs = _repairService.GetRepairs()
                   .Select(u => new AllRepairsVM
                   {
@@ -42,6 +31,28 @@ namespace ServicePernik.Controllers
                   }).ToList();
 
             return this.View(repairs);
+        }
+
+        // GET: RepairsController/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: RepairsController/Create
+        public ActionResult Create()
+        {
+            
+            var repair = new AddRepairVM();
+            
+            repair.RepairCategories = _repairService.GetRepairCategories()
+                .Select(c => new CategoryPairVM()
+                {
+                    Id = c.Id,
+                    Name=c.Name
+                })
+                .ToList();
+            return View(repair);
         }
 
         // POST: RepairsController/Create

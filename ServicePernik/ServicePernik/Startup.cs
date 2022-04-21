@@ -47,6 +47,7 @@ namespace ServicePernik
             services.AddTransient<IClientService, ClientService>();
             services.AddTransient<IHourService, HourService>();
             services.AddTransient<IReservationService, ReservationService>();
+            services.AddTransient<IRepairService, RepairService>();
 
             services.AddRazorPages();
             services.Configure<IdentityOptions>(option =>

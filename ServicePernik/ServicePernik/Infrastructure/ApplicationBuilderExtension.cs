@@ -19,10 +19,13 @@ namespace ServicePernik.Infrastructure
             var services = serviceScope.ServiceProvider;
             var data = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             SeedsStatusReservation(data);
-
+           // var servicesCategories = serviceScope.ServiceProvider;
+          //  var dataCategories = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            
+            SeedsStatusReservation(data);
             await RoleSeeder(services);
             await SeedAdministrator(services);
-
+            SeedsRepairCategories(data);
 
             return app;
         }
@@ -44,6 +47,21 @@ namespace ServicePernik.Infrastructure
             data.SaveChanges();
         }
 
+        private static void SeedsRepairCategories(ApplicationDbContext data)
+        {
+            if (data.RepairCategories.Any())
+            {
+                return;
+            }
+            data.RepairCategories.AddRange(new[]
+            {
+                new RepairCategory {Name="Diagnostic"},
+                new RepairCategory {Name="Installation"},
+                new RepairCategory {Name="Profilactica"},
+                
+            });
+            data.SaveChanges();
+        }
         private static async Task RoleSeeder(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();

@@ -8,7 +8,8 @@ namespace ServicePernik.Abstractions
 {
     public interface IRepairService
     {
-        bool CreateRepair( string code, string name, int repairCategoryId, decimal price, string description);
+        bool CreateRepair(string code, string name, int repairCategoryId, decimal price, string description);
         List<Repair> GetRepairs();
+        List<RepairCategory> GetRepairCategories();
     }
 }

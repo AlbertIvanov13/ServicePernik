@@ -1,4 +1,5 @@
 ﻿using ServicePernik.Entities;
+using ServicePernik.Models.Category;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,7 +23,7 @@ namespace ServicePernik.Models.Repair
 
         [Required]
         public int RepairCategoryId { get; set; }
-        public virtual RepairCategory RepairCategory { get; set; }
+      //  public virtual RepairCategory RepairCategory { get; set; }
 
         [Required]
         public decimal Price { get; set; }
@@ -31,6 +32,7 @@ namespace ServicePernik.Models.Repair
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        public virtual ICollection<Report> Reports { get; set; }
+       // public virtual ICollection<Report> Reports { get; set; }
+        public virtual List<CategoryPairVM> RepairCategories { get; set; }
     }
 }
