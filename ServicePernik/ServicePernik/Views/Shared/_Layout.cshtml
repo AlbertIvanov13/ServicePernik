@@ -33,22 +33,7 @@
                                 <a class="nav-link text-light" asp-area="" asp-controller="Hours" asp-action="Create"><b>Създай час</b></a>
                             </li>
                         }
-                    <li class="nav-item active">
-                        <div class="dropdown show">
-                            <a class="nav-link active dropdown-toggle" href="#"
-                               id="dropdownMenuLink"
-                               data-toggle="dropdown"
-                               aria-haspopup="true"
-                               aria-expanded="false">
-                                <b>Часове</b>
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="/Hours/Index">Всички часове</a>
-                            </div>
-                        </div>
-                    </li>
-                        @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Administrator")))
+                        @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Client")))
                         {
                             <li class="nav-item active">
                                 <div class="dropdown show">
@@ -57,16 +42,36 @@
                                        data-toggle="dropdown"
                                        aria-haspopup="true"
                                        aria-expanded="false">
-                                        <b>Услуги</b>
+                                        <b>Часове</b>
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="/Repairs/Index">Всички услуги</a>
-                                        <a class="dropdown-item" href="/Repairs/Create">Добави услуга</a>
+                                        <a class="dropdown-item" href="/Hours/Index">Всички часове</a>
                                     </div>
                                 </div>
                             </li>
                         }
+                        <li class="nav-item active">
+                            <div class="dropdown show">
+                                <a class="nav-link active dropdown-toggle" href="#"
+                                   id="dropdownMenuLink"
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
+                                    <b>Услуги</b>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="/Repairs/Index">Всички услуги</a>
+                                    @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Administrator")))
+                                    {
+                                        <a class="dropdown-item" href="/Repairs/Create">Добави услуга</a>
+                                    }
+
+                                </div>
+                            </div>
+                        </li>
+
                         @if ((this.User.Identity.IsAuthenticated) && (this.User.IsInRole("Administrator")))
                         {
                             <li class="nav-item active">
