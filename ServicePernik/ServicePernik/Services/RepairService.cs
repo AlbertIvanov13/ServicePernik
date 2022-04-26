@@ -28,7 +28,6 @@ namespace ServicePernik.Services
             };
 
             _context.Repairs.Add(repair);
-            _context.SaveChanges();
             return _context.SaveChanges() != 0;
         }
 

@@ -10,6 +10,10 @@ namespace ServicePernik.Models.Repair
 {
     public class AddRepairVM
     {
+        public AddRepairVM()
+        {
+            RepairCategories = new List<CategoryPairVM>();
+        }
         [Key]
 
         public int Id { get; set; }
