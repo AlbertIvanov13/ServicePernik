@@ -15,9 +15,11 @@ namespace ServicePernik.Entities
         public virtual Repair Repair { get; set; }
 
         public DateTime TimeOfRepair { get; set; }
+        public int EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
 
-       /* [Required]
-        public int ReservationId { get; set; }
-        public virtual Reservation Reservation { get; set; }*/
+        /* [Required]
+         public int ReservationId { get; set; }
+         public virtual Reservation Reservation { get; set; }*/
     }
 }

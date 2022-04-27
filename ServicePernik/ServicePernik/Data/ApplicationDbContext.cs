@@ -30,6 +30,7 @@ namespace ServicePernik.Data
         public DbSet<ServicePernik.Models.Reservation.AllReservationsVM> AllReservationsVM { get; set; }
         public DbSet<ServicePernik.Models.Repair.AddRepairVM> AddRepairVM { get; set; }
         public DbSet<ServicePernik.Models.Repair.AllRepairsVM> AllRepairsVM { get; set; }
+        public DbSet<ServicePernik.Models.Reservation.EditReservationVM> EditReservationVM { get; set; }
      /*   public DbSet<ServicePernik.Models.Employee.CreateEmployeeVM> CreateEmployeeVM { get; set; }
         public DbSet<ServicePernik.Models.Client.CreateClientVM> CreateClientVM { get; set; }
         public DbSet<ServicePernik.Models.Client.ClientListingVM> ClientListingVM { get; set; }

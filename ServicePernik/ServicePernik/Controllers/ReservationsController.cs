@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServicePernik.Abstractions;
+using ServicePernik.Data;
 using ServicePernik.Entities;
 using ServicePernik.Models.Reservation;
 using System;
@@ -15,10 +16,12 @@ namespace ServicePernik.Controllers
     {
         private readonly IReservationService _reservationService;
         private readonly IHourService _hourService;
-        public ReservationsController(IReservationService reservationService, IHourService hourService)
+        private readonly ApplicationDbContext _context;
+        public ReservationsController(IReservationService reservationService, IHourService hourService, ApplicationDbContext context)
         {
             _reservationService = reservationService;
             _hourService = hourService;
+            _context = context;
         }
         // GET: ReservationsController
         public ActionResult Index()
@@ -28,7 +31,34 @@ namespace ServicePernik.Controllers
                {
                    Id = item.Id,
                    HourId = item.HourId,
-                   Description = item.Description                
+                   Hour=item.Hour.FreeHour.ToString(),
+                   Description = item.Description,
+                   ClientId=item.ClientId,
+                   ClientFullName=item.Client.FirstName+" "+item.Client.LastName,
+                   StatusReservationId=item.StatusReservationId,
+                   StatusReservationName=item.StatusReservation.Name,
+                   DateReservation =item.DateReservation,
+
+               }).ToList();
+            return View(reservations);
+        }
+
+        public ActionResult My()
+        {
+            string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            List<AllReservationsVM> reservations = _reservationService.GetReservations()
+                .Where(x=>x.Client.UserId==currentUserId)
+               .Select(item => new AllReservationsVM()
+               {
+                   Id = item.Id,
+                   HourId = item.HourId,
+                   Hour = item.Hour.FreeHour.ToString(),
+                   Description = item.Description,
+                   ClientId = item.ClientId,
+                   ClientFullName = item.Client.FirstName + " " + item.Client.LastName,
+                   StatusReservationId = item.StatusReservationId,
+                   StatusReservationName = item.StatusReservation.Name,
+                   DateReservation = item.DateReservation,
 
                }).ToList();
             return View(reservations);
@@ -74,7 +104,7 @@ namespace ServicePernik.Controllers
             var created = _reservationService.CreateReservation(id, currentUserId, model.Description);
             if (created)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(My));
             }
             else
             {
@@ -83,24 +113,52 @@ namespace ServicePernik.Controllers
         }
 
         // GET: ReservationsController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Reservation item = _context.Reservations.Find(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            EditReservationVM reservation = new EditReservationVM()
+            {
+                Id = item.Id,
+                DateReservation = item.DateReservation,
+                HourId = item.HourId,
+                StatusReservationId=item.StatusReservationId,
+                ClientId=item.ClientId,
+                Description=item.Description,
+             
+            };
+            return View(reservation);
         }
 
         // POST: ReservationsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, EditReservationVM bindingModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                Reservation reservation = new Reservation
+                {
+                    Id = bindingModel.Id,
+                    DateReservation = bindingModel.DateReservation,
+                    HourId = bindingModel.HourId,
+                    StatusReservationId = bindingModel.StatusReservationId,
+                    ClientId=bindingModel.ClientId,
+                    Description=bindingModel.Description
+                };
+                _context.Reservations.Update(reservation);
+                _context.SaveChanges();
+                return this.RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(bindingModel);
         }
 
         // GET: ReservationsController/Delete/5
